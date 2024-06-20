@@ -1,41 +1,36 @@
 const Joi = require("joi");
-const VoteModel = require("../models/vote");
+const {contractInstance} = require("../contracts/index")
 
 const mongodbIdRegex = /^[0-9a-fA-F]{24}$/;
 
 const voteController = {
 
-    async vote(req,res){
+   async vote(req,res){
 
         const voteSchema = Joi.object({
-            election: Joi.string().regex(mongodbIdRegex).required(),
-            candidate: Joi.string().regex(mongodbIdRegex).required(),
-            party: Joi.string().regex(mongodbIdRegex).required(),
-            voter: Joi.string().regex(mongodbIdRegex).required(),
+            id: Joi.string().regex(mongodbIdRegex).required()
         });
 
-        const validate = voteSchema.validate(req.body);
+        const validate = voteSchema.validate(req.params);
         if(validate.error){
-            return res.status(401).json({message:validate.error.message});
+            return res.status(400).json({success: false, message: validate.error.message});
         }
-
         try {
-            const {election, candidate, party, voter} = req.body;
-            const vote = await VoteModel.findOne({candidate}) //needs attention
-            
-            if(vote){
-                return res.status(405).json({message:"You have already voted"})
-            }
-
-            const newVote = new VoteModel({
-                election, candidate, party, voter
-            });  
-            await newVote.save();
-        } catch (error) {
-            return res.status(500).json({message:"Internal Server Error", error}) 
+            const {id} = req.params;
+            const {index, voterId} = req.body;
+            const tx = await contractInstance.vote(id,voterId,index);
+            await tx.wait();
+      
+            return res.status(201).json({success: true, message: 'Vote casted successfully'})
         }
-        return res.status(201).json({message:"Voted successfully"})
-    }
+        catch (error) {
+            return res.status(500).json({success: false, message: error.message});
+        }
+
+   }
+
+
+
 
 };
 

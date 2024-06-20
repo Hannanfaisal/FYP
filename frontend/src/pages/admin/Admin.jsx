@@ -8,11 +8,11 @@ const Admin = () => {
     <div>
         <div className=''>
            
-           <div className='fixed w-full '> 
+           <div className='fixed w-full'> 
             <SideBar/>
            </div>
            
-            
+           {/* -z-10 xl:z-20 */}
 
             <div className=''>
                 

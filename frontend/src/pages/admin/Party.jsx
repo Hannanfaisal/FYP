@@ -1,107 +1,46 @@
 
-import React, { useState } from 'react'
-import {GrAddCircle} from 'react-icons/gr'
-import notFoundImage from '/notFound.png'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Party = () => {
+  const location = useLocation()
 
-    const [toggle, setToggle] = useState(false)
-
-    const Toggle = () =>{
-        setToggle(true)
-    }
-
+  const {state: value} = location;
+ 
   return (
-    
-        <div className='bg-gray-50 p-2 rounded-md  border-2 border-gray-100'> 
-        <div className='flex items-center font-semibold text-lg  justify-center gap-1 cursor-pointer' onClick={Toggle} >
-            <GrAddCircle/>
-            <h2>Add Political Party</h2>
+    <div className='flex justify-center'>
+      <div className='w-full lg:w-[1700px]'>
+        <div className='bg-slate-50 rounded-md p-5 border-2 border-slate-100 mb-12'>
+            <div className='flex items-center gap-4'>
+              <div className='w-[150px] bg-white p-5 rounded-full border-2  border-green-700'>
+                <img src={value.identification}/>  
+              </div>
+              <div>
+                 <h2 className='font-bold italic text-2xl'> {value.name}<small className='text-xs'>(Party)</small></h2>
+              </div>
+            </div>
+            <div className='mt-5'>
+              <div className='flex gap-16 mt-2 '>
+                <p className='font-semibold text-slate-800'>Email: </p>   
+                <a className='underline italic text-blue-700' href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${value.email}`} target="_blank">{value.email}</a>
+              </div>
+              <div className='flex gap-5 mt-2'>
+                <p className='font-semibold text-slate-800'>Description: </p>   
+               <p className=' text-justify'> {value.description} </p>
+              </div>
+              <div className='flex gap-5 mt-2'>
+                <p className='font-semibold text-slate-800'>Candidates:</p>   
+               <div className=' border-2 p-2 rounded-md text-justify flex gap-1 '> {value.candidates.map((value)=>{
+                return <div className='bg-green-700 mt-2 py-1 px-2 text-center text-white rounded-md' >
+                  {value.name}
+                  
+                  </div>
+               })} </div>
+              </div>
+            </div>
         </div>
-
-        {toggle && 
-        <div className='space-y-4 p-4 '>
-            <form>
-                <div className='grid xl:grid-cols-2 2xl:grid-cols-3 gap-5'>
-
-                {/* name
-email
-identification-logo
-candidate (ref: candidates)
-slogan
-password
-description */}
-
-
-
-
-
-
-
-
-            <div className='my-1 ' >
-                <label htmlFor='name' className='font-medium'>
-                        Name
-                </label>
-                <input className='name p-2  border rounded-md block w-full  shadow-md focus:shadow-none  focus:outline-lime-600 placeholder:text-gray-600' type='text' placeholder='Enter name'/>
-            </div>
-
-            <div className='my-1 ' >
-                <label htmlFor='name' className='font-medium'>
-                        Email
-                </label>
-                <input className='email p-2  border rounded-md block w-full  shadow-md focus:shadow-none  focus:outline-lime-600 placeholder:text-gray-600' type='text' placeholder='Enter email'/>
-            </div>
-
-
-            <div className='' >
-                <label htmlFor='logo' className='font-medium'>
-                        Description
-                </label>
-
-                <textarea className='block p-2 w-full rounded-md shadow-md border placeholder:text-gray-600 outline-gray-200 focus:shadow-none ' rows='2' placeholder='Enter description'/>
-
-            </div>
-                        
-            <div className=' ' >
-                <label htmlFor='password' className='font-medium'>
-                        Password
-                </label>
-                <input className='password p-2  border rounded-md block w-full  shadow-md focus:shadow-none  focus:outline-lime-600 placeholder:text-gray-600' type='text' placeholder='Enter password'/>
-            </div>
-
-            <div className='' >
-                <label htmlFor='logo' className='font-medium'>
-                       Identification Logo
-                </label>
-                <div className='flex items-center gap-2'>
-                     <div className='logo rounded-full border-2 w-16 p-3 bg-white'>
-                     <img src={notFoundImage}/>
-                     </div>
-
-                     <input type='file' className='block w-full  p-2 rounded-md bg-white outline-dashed outline-gray-200 outline-2 file:p-1.5 file:bg-slate-200 file:text-green-900 file:cursor-pointer file:rounded-md file:border-none'/>
-                
-                </div>
-               
-
-                
-            </div>
-
-                </div>
-
-            </form> 
-            <div className='gap-2 flex font-semibold'>
-                <button   data-te-ripple-init
- className='bg-green-700 p-2  text-white rounded-md hover:bg-green-600'>REGISTER</button>
-                <button className='bg-gray-300 p-2 rounded-md' onClick={()=>setToggle(false)}>Cancel</button>
-            </div> 
-            
-        </div>
-        }
-        
-        
-        </div>
-
+      </div>
+    </div>
   )
 }
 

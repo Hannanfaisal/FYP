@@ -1,4 +1,6 @@
+
 const mongoose = require("mongoose");
+
 
 const partySchema = new mongoose.Schema({
     name: {
@@ -21,7 +23,24 @@ const partySchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-    }
+    },
+
+    //  candidates: {
+    //     type: Object,
+    //     of: {
+    //         type: mongoose.SchemaTypes.ObjectId,
+    //         ref: 'Candidate'
+    //     },
+    //     required: true
+    // }
+
+    candidates: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Candidate',
+            default: null
+        }
+    ]
 
 
 },{

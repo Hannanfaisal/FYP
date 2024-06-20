@@ -9,7 +9,7 @@ const feedbackController = {
     async create(req, res) {
 
         const createSchema = Joi.object({
-            rating: Joi.number().min(5).required(),
+            rating: Joi.number().max(5).required(),
             content: Joi.string().required(),
             voter: Joi.string().regex(mongodbIdRegex).required(),
             election: Joi.string().regex(mongodbIdRegex).required(),
@@ -43,7 +43,7 @@ const feedbackController = {
         let feedbacks;
         try {
 
-            feedbacks = await FeedbackModel.find();
+            feedbacks = await FeedbackModel.find().populate('voter');
             if (feedbacks.length == 0) {
                 return res.status(404).json({ "message": "Feedbacks not avaiable" })
             }

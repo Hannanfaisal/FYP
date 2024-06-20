@@ -1,43 +1,63 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './App.css'
 import React from 'react'
 import Admin from './pages/admin/Admin'
 import Error from './pages/Error'
 import Profile from './pages/admin/Profile'
+import Login from './pages/admin/Login'
+import Announcement from './pages/admin/Announcement'
+import Feedback from './pages/admin/Feedback'
+import Contact from './pages/admin/Contact'
+import Candidates from './pages/admin/Candidates'
+import Candidate from './pages/admin/Candidate'
+import Dashboard from './pages/admin/Dashboard'
+import Elections from './pages/admin/Elections'
+import Parties from './pages/admin/Parties'
 import Party from './pages/admin/Party'
+import Protected from './components/Protected'
+import Results from './pages/admin/Results'
+import { useSelector } from 'react-redux'
+import { Admins } from './pages/admin/Admins'
+import Notifications from './pages/admin/Notifications'
+import Voters from './pages/admin/Voters'
+import Registeration from './pages/admin/Registeration'
+
 
 const App = () => {
+
+  const auth =  useSelector((state)=>state.user.auth)
+
+  
+
+
   return (
     <BrowserRouter>
     
     <Routes>
+      <Route path='/login' element={<Login/>}/>
 
-      <Route path='/' element={ <Admin/> } >
-        <Route path='dashboard'/>
-        <Route path='party'element={<Party/>}/>  
-        <Route path='profile' element={<Profile/>}/>
-        <Route path='candidates' element={ <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, dicta asperiores! Eveniet corporis, exercitationem dolores vitae possimus veritatis, deserunt excepturi eius rerum cumque nam laudantium minima pariatur, quos ipsum unde.
-        Sequi, explicabo. Nam quibusdam, fuga hic provident nemo ratione dicta ipsa perspiciatis eaque perferendis quasi officia omnis est accusantium exercitationem architecto dolore quae error! Quae amet quisquam sint neque laboriosam.
-        Accusamus enim pariatur exercitationem cupiditate est sequi harum maxime minus, officia odit, quam eum quo dolorum accusantium consectetur rem quibusdam quaerat ratione quos. Nostrum ipsa sed, dolore molestiae eos quas!
-        Accusantium, nobis laudantium velit tempore adipisci nihil earum, enim quis tempora error itaque, vitae officia? Veniam laudantium ullam, consequatur itaque rem cum, porro minus doloremque excepturi eligendi odit ratione illum?
-        Reprehenderit neque minus culpa iusto eveniet dolores repellendus eaque, asperiores laudantium nam dicta iste id veniam! Animi, omnis eum autem voluptates a hic sapiente harum beatae reiciendis magnam eveniet veniam.
-        Quod cum odio placeat eos fugit impedit maxime veritatis quibusdam, tenetur esse, vel expedita odit laborum debitis, officiis rem reiciendis molestias in nihil illo voluptatibus quos. Eius voluptatibus exercitationem nisi!
-        Aperiam, illum at mollitia laborum sint nisi impedit iusto! Recusandae, voluptate quos sunt nostrum aliquid hic voluptates reprehenderit accusamus rerum quis numquam maiores quibusdam expedita veniam mollitia aut laborum! Itaque.
-        Dolores iusto repudiandae unde reprehenderit ipsam tenetur, maxime inventore voluptate! Repellat consequatur adipisci qui ab quod debitis, culpa maxime. Delectus sed at quis dicta dolore nihil officiis voluptatem praesentium aut.
-        Esse minus id aspernatur alias quae quaerat debitis sapiente aliquid, voluptas, voluptate quam repellat! Quia provident quam similique laboriosam in debitis incidunt officia dolor rerum totam. Minima error dicta rem!
-        Possimus quos assumenda, doloremque non nemo explicabo voluptatum exercitationem natus blanditiis quo consequuntur obcaecati enim commodi officia inventore consectetur totam aut eos omnis delectus ab, impedit sit! Atque, ratione nulla?
-        Eum, ratione quasi ipsa officia inventore harum aperiam labore fuga vel, deserunt, ullam consequuntur placeat repellendus dolorem beatae ducimus iste alias eius quisquam? Molestias, reiciendis velit repudiandae quibusdam dolorem numquam.
-        Quae, ipsam exercitationem. Nulla voluptate voluptatibus, magni earum omnis eaque est. Voluptatem, harum debitis. Ab dignissimos labore provident laborum molestias dicta fugiat illo aperiam iste ut! Nesciunt reprehenderit molestias consequatur?
-        Fuga totam corrupti quo repellendus incidunt dolorem cupiditate ipsum autem possimus voluptas. Maxime iure odio in qui dicta vero aperiam, molestias amet eius distinctio natus ea excepturi ipsum? Harum, accusamus.
-        Soluta odio aperiam, quaerat magnam quam reiciendis iusto, aliquid obcaecati maiores ipsam quas? Corrupti sequi nemo doloremque debitis fugiat! Architecto deserunt porro fugit atque quis natus, rem temporibus esse magni!
-        Dolore natus, illum culpa pariatur architecto quisquam, eaque velit incidunt commodi officia dicta nemo qui eligendi quaerat quia eius consequuntur, reiciendis consectetur. Odio saepe rem optio consectetur modi, quae suscipit.</div> }/>
-        <Route path='announcements'/>
-        <Route path='results' />
-        <Route path='feedback'/>
-        <Route path='logout'/>
+      <Route path='/' element={ <Protected isAuth={auth}><Admin/> </Protected> } >
+         <Route path='/' element={  <Protected isAuth={auth}><Dashboard/></Protected>}/>
+        <Route path='dashboard' element={  <Protected isAuth={auth}><Dashboard/></Protected>}/>
+        <Route path='parties' element={<Protected isAuth={auth}><Parties/></Protected>}/>  
+        <Route path='party' element={<Protected isAuth={auth}><Party/></Protected>}/>  
+        <Route path='profile' element={<Protected isAuth={auth}><Profile/> </Protected>}/>
+        <Route path='candidates' element={ <Protected isAuth={auth}><Candidates/></Protected> }/>
+         
+
+        <Route path='elections' element={  <Protected isAuth={auth}><Elections/></Protected>}/>
+        <Route path='candidate' element={ <Protected isAuth={auth}><Candidate/></Protected>}/>
+        <Route path='announcements' element={ <Protected isAuth={auth}><Announcement/></Protected>}/>
+        <Route path='feedback' element={<Protected isAuth={auth}><Feedback/></Protected>}/>
+        <Route path='contact' element={ <Protected isAuth={auth}><Contact/></Protected> }/>
+        <Route path='results' element={<Protected isAuth={auth}><Results/></Protected>} />
+        <Route path='admins' element={<Protected isAuth={auth}><Admins/></Protected>}/>
+        <Route path='notifications' element={<Protected isAuth={auth}><Notifications/></Protected>}/>
+        <Route path='voters' element={<Protected isAuth={auth}> <Voters/> </Protected>}/>
       </Route> 
-
+     
       <Route path='/*' element={<Error/>}/> 
+      <Route path='/registration' element={ <Protected isAuth={auth}> <Registeration/></Protected> }/>
     </Routes>
     </BrowserRouter>
   )

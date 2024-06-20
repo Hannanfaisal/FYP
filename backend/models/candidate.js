@@ -34,6 +34,14 @@ const candidateSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Party",
         required: true
+    },
+    approval: {
+        type: Boolean,
+        default: false
+    },
+    electedAs: {
+        type: String,
+        default: "Not Elected Yet"
     }
 },{
     timestamps: true

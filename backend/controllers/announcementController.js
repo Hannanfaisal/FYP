@@ -49,7 +49,34 @@ const announcementController = {
             return res.status(500).json({message:"Internal Server Error", error})
         }
 
-        return res.status(200).json({announcements})
+        return res.status(200).send(announcements)
+    },
+
+
+    async update (req,res){
+
+        const updateSchema = Joi.object({
+            id: Joi.string().regex(mongodbIdRegex).required(),
+            content: Joi.string().required()
+        });
+
+        const validate = updateSchema.validate(req.body);
+        if(validate.error){
+            return res.status(400).json({success: false,message: validate.error.message});
+        }
+
+        let updatedAnnouncement;
+        try {
+            const {content, id} = req.body;
+
+            updatedAnnouncement = await AnnouncementModel.findByIdAndUpdate({_id: id}, {content}, {new: true});
+
+
+            
+        } catch (error) {
+            return res.status(500).json({message:"Internal Server Error", error})
+        }
+        return res.status(200).json({success: true,message:"Announement updated", updatedAnnouncement})
     },
 
     async delete(req,res){

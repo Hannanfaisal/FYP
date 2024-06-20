@@ -9,6 +9,19 @@
   
 }
 
+.swal2-modal {
+  font-size: 13px !important;
+}
+
+/* body {
+  
+  background-attachment:fixed;
+} */
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 
 
 

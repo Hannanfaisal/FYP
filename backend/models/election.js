@@ -15,25 +15,34 @@ const electionSchema = new mongoose.Schema({
     },
     status:{
         type: String,
-        enum: ["","in progress","completed"],
-        default: ""
+        enum: ["not started","in progress","completed"],
+        required: true
+        // default: "not started"
     },
     parties: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: [mongoose.SchemaTypes.ObjectId],
         ref: "Party",
         required: true
     },
-    candidates: {  //should be array or not??
-        type: mongoose.SchemaTypes.ObjectId,
+    candidates: {
+        type: [mongoose.SchemaTypes.ObjectId],
         ref: "Candidate",
         required: true
     }
+    // candidates: {
+    //     type: Object,
+    //     of: {
+    //         type: mongoose.SchemaTypes.ObjectId,
+    //         ref: 'Candidate'
+    //     },
+    //     required: true
+    // }
 
 
 },{
-    timeseries: true
+    timestamps: true
 });
 
 
-const Election = mongoose.model("Election",electionSchema);
-module.exports = Election;
+const ElectionModel = mongoose.model("Election",electionSchema);
+module.exports = ElectionModel;

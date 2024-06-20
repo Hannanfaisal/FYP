@@ -25,7 +25,7 @@ def authenticate(captured_img_path, db_collection_name):
 
         parsed_uri = urlparse('mongodb://localhost:27017/facialRecognitionDB')
         db_name = parsed_uri.path[1:]
-        
+        print(db_name)
 
         client = MongoClient('mongodb://localhost:27017/')
         db = client[db_name]

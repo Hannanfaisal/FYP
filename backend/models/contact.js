@@ -14,6 +14,22 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    date: {
+        day: {
+            type: Number,
+            default: new Date().getDay()
+        },
+        month:{
+            type: Number,
+            default: new Date().getMonth()+1,
+            min: 1,
+            max: 12
+        },
+        year: {
+            type: Number,
+            default: new Date().getFullYear()
+        }
+    },
     voter: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Voter",

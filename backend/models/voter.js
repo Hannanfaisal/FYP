@@ -20,7 +20,19 @@ const voterSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true
-    }
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        default: null
+    },
+    phone: {
+       type: String,
+       default: null
+    },
 },{
     timestamps: true
 });

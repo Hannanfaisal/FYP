@@ -34,6 +34,26 @@ const contactController = {
 
         return res.status(201).json({message: "Your response recorded"})
 
+    },
+
+
+    async getAll(req,res){
+
+        let contacts;
+        try {
+            
+           contacts = await ContactModel.find()
+
+           if(contacts.length == 0){
+            return res.status(404).json({"message": "Contacts not avaiable"})
+           }
+
+        } catch (error) {
+            return res.status(500).json({"message": "Internal Server Error",error})
+        }
+
+        return res.status(200).json({contacts})
+
     }
 
     
